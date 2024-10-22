@@ -23,6 +23,8 @@ function Login() {
           password : pwdRef.current.value
         });
         if(res.data.success){
+          // console.log(res.data);
+          localStorage.setItem("token", res.data.token);
           navigate("/main");
         } else {
           alert("아이디/비밀번호 다시 확인");

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Box, Typography, Paper, IconButton } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { jwtDecode } from 'jwt-decode';
 
 const Main = () => {
   const [feeds, setFeeds] = useState([]);
@@ -30,8 +31,11 @@ const Main = () => {
   }
 
   async function fnList() {
+    const token = localStorage.getItem("token");
     try {
-      const res = await axios.get('http://localhost:3100/feed');
+      const res = await axios.get('http://localhost:3100/feed', {
+        headers : {token}
+      });
       if (res.data.success) {
         setFeeds(res.data.list);
         console.log(res.data.list);
@@ -43,6 +47,9 @@ const Main = () => {
     } 
   };
   useEffect(() => {   
+    // const token = localStorage.getItem("token");
+    // const dToken = jwtDecode(token);
+    // console.log(dToken);
     fnList();
   }, []);
 
